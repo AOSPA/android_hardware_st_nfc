@@ -240,12 +240,17 @@ void halWrapperDataCallback(uint16_t data_len, uint8_t* p_data) {
             mHalWrapperCallback(HAL_NFC_OPEN_CPLT_EVT, HAL_NFC_STATUS_FAILED);
             I2cCloseLayer();
           } else {
-            STLOG_HAL_V("%s - Send APDU_GET_ATR_CMD", __func__);
-            mRetryFwDwl--;
-            if (!HalSendDownstreamTimer(mHalHandle, ApduGetAtr,
-                                        sizeof(ApduGetAtr),
-                                        FW_TIMER_DURATION)) {
-              STLOG_HAL_E("%s - SendDownstream failed", __func__);
+            if (((p_data[3] == 0x01) && (p_data[8] == HW_ST54L)) ||
+                ((p_data[2] == 0x41) && (p_data[3] == 0xA2))) {  // ST54L
+              FwUpdateHandler(mHalHandle, data_len, p_data);
+            } else {
+              STLOG_HAL_V("%s - Send APDU_GET_ATR_CMD", __func__);
+              mRetryFwDwl--;
+              if (!HalSendDownstreamTimer(mHalHandle, ApduGetAtr,
+                                          sizeof(ApduGetAtr),
+                                          FW_TIMER_DURATION)) {
+                STLOG_HAL_E("%s - SendDownstream failed", __func__);
+              }
             }
             mHalWrapperState = HAL_WRAPPER_STATE_UPDATE;
           }
@@ -556,7 +561,7 @@ void halWrapperDataCallback(uint16_t data_len, uint8_t* p_data) {
 
     case HAL_WRAPPER_STATE_UPDATE:  // 7
       STLOG_HAL_V("%s - mHalWrapperState = HAL_WRAPPER_STATE_UPDATE", __func__);
-      UpdateHandler(mHalHandle, data_len, p_data);
+      FwUpdateHandler(mHalHandle, data_len, p_data);
       break;
     case HAL_WRAPPER_STATE_APPLY_CUSTOM_PARAM:  // 8
       STLOG_HAL_V(
