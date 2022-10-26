@@ -528,10 +528,10 @@ void StNfc_hal_getConfig(NfcConfig& config) {
 
 void StNfc_hal_setLogging(bool enable) {
   dbg_logging = enable;
-  if (dbg_logging) {
+  if (dbg_logging && hal_conf_trace_level < STNFC_TRACE_LEVEL_VERBOSE) {
     hal_trace_level = STNFC_TRACE_LEVEL_VERBOSE;
   } else {
-    hal_trace_level = STNFC_TRACE_LEVEL_ERROR;
+    hal_trace_level = hal_conf_trace_level;
   }
 }
 
