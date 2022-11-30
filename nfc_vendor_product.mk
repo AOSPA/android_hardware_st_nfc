@@ -17,5 +17,11 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.se.omapi.uicc.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.se.omapi.uicc.xml \
     frameworks/native/data/etc/com.android.nfc_extras.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.android.nfc_extras.xml
 
+ifeq ($(strip $(TARGET_USES_ST_AIDL_NFC)),true)
+ifeq ($(TARGET_NFC_SKU),)
+ST_VENDOR_NFC += nfc-service-default.xml
+endif
+endif
+
 PRODUCT_PACKAGES += $(ST_VENDOR_NFC)
 endif

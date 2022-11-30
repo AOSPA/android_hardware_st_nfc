@@ -11,7 +11,6 @@ cc_binary {
     name: "android.hardware.nfc-service.st",
     relative_install_path: "hw",
     init_rc: ["nfc-service-default.rc"],
-    vintf_fragments: ["nfc-service-default.xml"],
     vendor: true,
     cflags: [
         "-Wall",
@@ -30,4 +29,11 @@ cc_binary {
         "Nfc.cpp",
         "hal_st21nfc.cc",
     ],
+}
+
+prebuilt_etc_xml {
+    name: "nfc-service-default.xml",
+    src: "nfc-service-default.xml",
+    sub_dir: "vintf/manifest",
+    vendor: true,
 }
