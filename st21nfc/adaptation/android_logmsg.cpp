@@ -126,13 +126,15 @@ void DispHal(const char* title, const void* data, size_t length) {
           STLOG_HAL_D("%s\n", line);
         }
       }
-      line[k] = 0;
+      if (k < 100) {
+        line[k] = 0;
+      }
     }
-    sprintf(&line[k * 3], "%02x ", d[i]);
+    snprintf(&line[k * 3], sizeof(line) - (k * 3), "%02x ", d[i]);
   }
 
   if (privacy) {
-    sprintf(&line[k * 3], "(hidden)");
+    snprintf(&line[k * 3], sizeof(line) - (k * 3), "(hidden)");
   }
 
   if (first_line == true) {
