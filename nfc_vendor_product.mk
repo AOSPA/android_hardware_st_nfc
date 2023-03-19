@@ -18,9 +18,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/com.android.nfc_extras.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.android.nfc_extras.xml
 
 ifeq ($(strip $(TARGET_USES_ST_AIDL_NFC)),true)
-ifneq ($(TARGET_NFC_SKU),)
-else
-DEVICE_MANIFEST_FILE += hardware/st/nfc/aidl/nfc-service-default.xml
+ifeq ($(TARGET_NFC_SKU),)
+ST_VENDOR_NFC += nfc-service-default.xml
 endif
 endif
 

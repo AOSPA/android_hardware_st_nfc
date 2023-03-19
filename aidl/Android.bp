@@ -30,3 +30,10 @@ cc_binary {
         "hal_st21nfc.cc",
     ],
 }
+
+prebuilt_etc_xml {
+    name: "nfc-service-default.xml",
+    src: "nfc-service-default.xml",
+    sub_dir: "vintf/manifest",
+    vendor: true,
+}
