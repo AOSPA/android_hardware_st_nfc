@@ -118,7 +118,8 @@ void HalCoreCallback(void* context, uint32_t event, const void* d,
         STLOG_HAL_W(
             "length is illogical. Header length is %d, packet length %zu\n",
             data[2], length);
-      } else if (rf_deactivate_delay && data[0] == 0x00 && data[1] == 0x00) {
+      } else if (length > 1 && rf_deactivate_delay
+                 && data[0] == 0x00 && data[1] == 0x00) {
         rf_deactivate_delay = false;
       }
 
