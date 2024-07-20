@@ -8,7 +8,6 @@ ST_VENDOR_NFC += android.hardware.nfc@1.2-service.st
 endif
 ST_VENDOR_NFC += nfc_nci.st21nfc.default
 
-ifeq ($(strip $(TARGET_USES_ST_NFC) $(TARGET_USES_ST_AIDL_NFC)),true)
 ifneq ($(TARGET_NFC_SKU),)
 NFC_PERMISSIONS_DIR := $(TARGET_COPY_OUT_ODM)/etc/permissions/sku_$(TARGET_NFC_SKU)
 else
