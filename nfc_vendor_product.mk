@@ -1,4 +1,6 @@
 # Enable build support for NFC open source vendor modules
+PRODUCT_PACKAGES += $(ST_VENDOR_NFC)
+
 ifeq ($(strip $(TARGET_USES_ST_AIDL_NFC)),true)
 ST_VENDOR_NFC += android.hardware.nfc-service.st
 else
@@ -27,6 +29,4 @@ ifeq ($(TARGET_NFC_SKU),)
 ST_VENDOR_NFC += nfc-service-default.xml
 endif
 endif
-
-PRODUCT_PACKAGES += $(ST_VENDOR_NFC)
 endif
